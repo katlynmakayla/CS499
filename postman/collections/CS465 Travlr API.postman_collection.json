@@ -1,0 +1,304 @@
+{
+  "info": {
+    "_postman_id": "3c2f3a1a-784e-417d-844f-6bd95bec006f",
+    "name": "CS465 Travlr API",
+    "description": "API collection for the CS465 Travlr full-stack travel booking application. Contains endpoints for managing trips, authentication, and travel resources.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Trips",
+      "item": [
+        {
+          "name": "Get All Trips",
+          "id": "ba4fe81b-2b65-4cc7-a005-d0f9d03b41b1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/trips",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "trips"
+              ]
+            },
+            "description": "Retrieves a list of all available trips"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Trip by Code",
+          "id": "9ae8b0ee-1553-40f3-99af-fa0d5efb27ce",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/trips/:tripCode",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "trips",
+                ":tripCode"
+              ],
+              "variable": [
+                {
+                  "key": "tripCode"
+                }
+              ]
+            },
+            "description": "Retrieves a single trip by its unique trip code"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Trip",
+          "id": "cca401d1-9983-4bee-9e23-8f72629f3106",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"TRIP001\",\n  \"name\": \"Sample Trip\",\n  \"length\": \"7 days\",\n  \"start\": \"2024-06-01T00:00:00.000Z\",\n  \"resort\": \"Beach Resort\",\n  \"perPerson\": \"2500.00\",\n  \"image\": \"trip-image.jpg\",\n  \"description\": \"An amazing travel experience\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/trips",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "trips"
+              ]
+            },
+            "description": "Creates a new trip in the system"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Trip",
+          "id": "b2d1301c-2e57-42c6-b9ca-315408576cb6",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"TRIP001\",\n  \"name\": \"Updated Trip Name\",\n  \"length\": \"10 days\",\n  \"start\": \"2024-07-01T00:00:00.000Z\",\n  \"resort\": \"Mountain Resort\",\n  \"perPerson\": \"3000.00\",\n  \"image\": \"updated-image.jpg\",\n  \"description\": \"Updated trip description\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/trips/:tripCode",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "trips",
+                ":tripCode"
+              ],
+              "variable": [
+                {
+                  "key": "tripCode"
+                }
+              ]
+            },
+            "description": "Updates an existing trip by trip code"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Trip",
+          "id": "f4b337f7-451d-4cb1-b270-43e57376cf2a",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/trips/:tripCode",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "trips",
+                ":tripCode"
+              ],
+              "variable": [
+                {
+                  "key": "tripCode"
+                }
+              ]
+            },
+            "description": "Deletes a trip by its trip code"
+          },
+          "response": []
+        }
+      ],
+      "id": "2c43931c-231e-4f23-a2db-0f368a589e30",
+      "description": "CRUD operations for trip management"
+    },
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register User",
+          "id": "2dfe8275-fa86-4890-8b5d-3c5f5a5c7678",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "register"
+              ]
+            },
+            "description": "Registers a new user account"
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "id": "323a27d2-b931-46d4-b404-f269900ad16b",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "login"
+              ]
+            },
+            "description": "Authenticates a user and returns a JWT token"
+          },
+          "response": []
+        }
+      ],
+      "id": "ed05475c-e9b7-43a1-a853-e115c5b59886",
+      "description": "User authentication endpoints"
+    },
+    {
+      "name": "Travel",
+      "item": [
+        {
+          "name": "Get Travel Listings",
+          "id": "3e15f29f-8632-4235-8663-3a10d5500cd9",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/travel",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "travel"
+              ]
+            },
+            "description": "Retrieves travel listing page"
+          },
+          "response": []
+        }
+      ],
+      "id": "0c5c0d25-8362-4140-bd5f-6baea8388dcd",
+      "description": "Travel listing endpoints"
+    },
+    {
+      "name": "Rooms",
+      "item": [
+        {
+          "name": "Get Rooms",
+          "id": "21a8ff85-51a1-4213-95ec-50fb2dce3a3f",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/rooms",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "rooms"
+              ]
+            },
+            "description": "Retrieves available rooms"
+          },
+          "response": []
+        }
+      ],
+      "id": "eab0be71-0dcf-4fa5-9b4c-73763c8fc248",
+      "description": "Room management endpoints"
+    },
+    {
+      "name": "Meals",
+      "item": [
+        {
+          "name": "Get Meals",
+          "id": "7844cfa8-a931-4999-8ca7-9db0e5342f51",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/meals",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "meals"
+              ]
+            },
+            "description": "Retrieves available meal options"
+          },
+          "response": []
+        }
+      ],
+      "id": "04a7f305-9af6-4b7c-8fd2-8aceb5e3aa6f",
+      "description": "Meal management endpoints"
+    }
+  ],
+  "variable": [
+    {
+      "id": "7e4bf22c-f694-4b4f-b9e4-51316a882b0f",
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Seafood Special",
+    "image": "seafoods.jpg",
+    "highlight": "Fried Salmon Special",
+    "description": "Seafood Special Enjoy our fresh seafood platter featuring salmon, shrimp, and crab prepared with local herbs and spices."
+  },
+  {
+    "name": "Sumptuous Desserts",
+    "image": "desserts.jpg",
+    "highlight": "Choco Ice Cream Sandwich",
+    "description": "Sumptuous Desserts Indulge in sweet treats like chocolate ice cream sandwiches, cakes, and pastries made daily by our chefs."
+  },
+  {
+    "name": "Buffet",
+    "image": "buffet.jpg",
+    "highlight": "Mixed Buffet",
+    "description": "Buffet Our buffet features a mix of local and international dishes to satisfy every appetite, served daily."
+  }
+]

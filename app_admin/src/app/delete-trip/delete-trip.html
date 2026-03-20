@@ -1,0 +1,49 @@
+<div class="delete-trip-container">
+  <h2>Delete Trip</h2>
+  <p *ngIf="message">{{ message }}</p>
+
+  <!-- Show the form once deleteForm is initialized -->
+  <form [formGroup]="deleteForm" (ngSubmit)="onSubmit()" *ngIf="deleteForm">
+    <div>
+      <label for="code">Code:</label>
+      <input id="code" formControlName="code" />
+    </div>
+    <div>
+      <label for="name">Name:</label>
+      <input id="name" formControlName="name" />
+    </div>
+    <div>
+      <label for="length">Length:</label>
+      <input id="length" formControlName="length" />
+    </div>
+    <div>
+      <label for="start">Start:</label>
+      <input id="start" formControlName="start"  />
+    </div>
+    <div>
+      <label for="resort">Resort:</label>
+      <input id="resort" formControlName="resort" />
+    </div>
+    <div>
+      <label for="perPerson">Per Person:</label>
+      <input id="perPerson" formControlName="perPerson"  />
+    </div>
+    <div>
+      <label for="image">Image URL:</label>
+      <input id="image" formControlName="image"  />
+    </div>
+    <div>
+      <label for="description">Description:</label>
+      <textarea id="description" formControlName="description" ></textarea>
+    </div>
+
+    <button type="submit">Delete Trip</button>
+    <button type="button" (click)="backToListing()">Cancel</button>
+  </form>
+
+  <!-- Message after deletion or if trip not found -->
+  <div *ngIf="!trip && message">
+    <p>{{ message }}</p>
+    <button (click)="backToListing()">Back to Trip Listing</button>
+  </div>
+</div>
