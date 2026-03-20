@@ -27,19 +27,27 @@ function authenticateJWT(req, res, next) {
     }
     // console.log(process.env.JWT_SECRET);
     // console.log(jwt.decode(token));
-    /*
-    // I had warnings to remove this unecessary code
-    const verified = jwt.verify(token, process.env.JWT_SECRET, (err,
-        verified) => {
-        if (err) {
-            return res.sendStatus(401).json('Token Validation Error!');
-        }
-        req.auth = verified; // Set the auth paramto the decoded object
-    });
-    */
-    next(); // We need to continue or this will hang forever
+
+    // verify the token and attach the decoded user to the request object
+    try {
+        const verified = jwt.verify(token, process.env.JWT_SECRET);
+
+        // attach decoded user to request
+        req.user = verified;
+
+        next();
+    } catch (err) {
+        console.log('Token verification failed:', err.message);
+        return res.sendStatus(401);
+    }
 }
 
+function requireAdmin(req, res, next) {
+    if (!req.user || req.user.role !== 'admin') {
+        return res.sendStatus(403); // forbidden
+    }
+    next();
+}
 
 
 // Define the route for user registration and login
@@ -53,13 +61,13 @@ router.route('/login')
 router
     .route('/trips')
     .get(tripsController.tripsList) // GET Method routes Trip List
-    .post(authenticateJWT, tripsController.tripsAddTrip); // POST Method routes Trip Add
+    .post(authenticateJWT, requireAdmin,tripsController.tripsAddTrip); // POST Method routes Trip Add
 
 router
     .route('/trips/:tripCode')
     .get(tripsController.tripsFindByCode) // GET Method routes Trip by Code
-    .put(authenticateJWT, tripsController.tripsUpdateTrip) // PUT Method routes Trip Update
-    .delete(authenticateJWT, tripsController.tripsDeleteTrip); // DELETE Method routes Trip Delete
+    .put(authenticateJWT, requireAdmin, tripsController.tripsUpdateTrip) // PUT Method routes Trip Update
+    .delete(authenticateJWT, requireAdmin, tripsController.tripsDeleteTrip); // DELETE Method routes Trip Delete
 
 // export the router
 module.exports = router;
