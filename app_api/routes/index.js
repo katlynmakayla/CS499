@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const tripsController = require('../controllers/trips');
 const authController = require('../controllers/authentication');
+const recommendationsController = require('../controllers/recommendations');
 const jwt = require('jsonwebtoken'); // enable json web tokens
 
 // Method to authenticate our JWT
@@ -68,6 +69,10 @@ router
     .get(tripsController.tripsFindByCode) // GET Method routes Trip by Code
     .put(authenticateJWT, requireAdmin, tripsController.tripsUpdateTrip) // PUT Method routes Trip Update
     .delete(authenticateJWT, requireAdmin, tripsController.tripsDeleteTrip); // DELETE Method routes Trip Delete
+
+router
+    .route('/recommendations')
+    .get(authenticateJWT, recommendationsController.getRecommendations); // GET Method routes Trip Recommendations
 
 // export the router
 module.exports = router;
