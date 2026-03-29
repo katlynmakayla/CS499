@@ -48,19 +48,20 @@ img {
 	margin: 0 auto;
 	padding: 1px;
 }
+/** determined to use display: flex to make the menu items evenly spaced */
+/** W3 Schools (2025, September 24). CSS Flexbox. Retrieved March 28, 2026, from https://www.w3schools.com/css/css3_flexbox.asp */
 #navigation ul {
-	display: inline-block;
+	display: flex;
 	width: 860px;
 	list-style: none;
 	margin: 0;
 	padding: 0;
 }
 #navigation li {
-	float: left;
+	flex: 1;
 	background-position: 0 -118px;
 	background-repeat: no-repeat;
 	height: 49px;
-	width: 122px;
 	margin: 0;
 	padding-left: 1px;
 	text-align: center;
@@ -475,7 +476,6 @@ hr {
 }
 #footer ul.navigation {
 	float: left;
-	display: inline-block;
 	list-style: none;
 	margin: 0;
 	padding: 0;
@@ -507,7 +507,6 @@ hr {
 /** Connect **/
 #connect {
 	float: right;
-	display: inline-block;
 	line-height: 26px;
 	margin: 12px 0 0;
 }
