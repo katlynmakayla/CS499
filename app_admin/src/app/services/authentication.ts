@@ -3,6 +3,8 @@ import { BROWSER_STORAGE } from '../storage';
 import { User } from '../models/user';
 import { AuthResponse } from '../models/auth-response';
 import { TripData } from './trip-data';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -109,9 +111,9 @@ export class Authentication {
   // result and only process when the Observable condition is satisfied
   // Uncomment the two console.log messages for additional debugging
   // information.
-  public login(user: User, passwd: string): void {
-    this.tripDataService.login(user, passwd).subscribe({
-      next: (value: any) => {
+  public login(user: User, passwd: string): Observable<any> {
+    return this.tripDataService.login(user, passwd).pipe(
+      tap((value: any) => {
         if (value) {
           console.log(value);
           this.authResponse = value;
@@ -121,11 +123,8 @@ export class Authentication {
             this.saveUser(value.user);
           }
         }
-      },
-      error: (error: any) => {
-        console.log('Error: ' + error);
-      },
-    });
+      }),
+    );
   }
   // Register method that leverages the register method in
   // tripDataService
@@ -170,6 +169,8 @@ export class Authentication {
   // Method to check if the current user is an admin
   public isAdmin(): boolean {
     const user = this.getCurrentUser();
+    //console.log('Checking admin status for user:', user);
+    console.log('Current User in isAdmin check:', user); 
     return user?.role === 'admin';
   }
   // Method to save the current user to storage
