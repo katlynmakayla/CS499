@@ -9,23 +9,24 @@ export class UserData {
 
   constructor(
     private http: HttpClient, 
-    @Inject(BROWSER_STORAGE) private storage: Storage
+    //@Inject(BROWSER_STORAGE) private storage: Storage
   ) {}
-
+/*
   // Helper to get headers with the JWT token
   private getHeaders(): HttpHeaders {
     return new HttpHeaders({
       'Authorization': `Bearer ${this.storage.getItem('travlr-token')}`
     });
   }
+    */
 
   // Get current user data (including profile)
   public getProfile(): Observable<any> {
-    return this.http.get(`${this.apiBaseUrl}user`, { headers: this.getHeaders() });
+    return this.http.get(`${this.apiBaseUrl}user`);
   }
 
   // Update user profile preferences
   public updateProfile(profileData: any): Observable<any> {
-    return this.http.put(`${this.apiBaseUrl}user/profile`, profileData, { headers: this.getHeaders() });
+    return this.http.put(`${this.apiBaseUrl}user/profile`, profileData);
   }
 }

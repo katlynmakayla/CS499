@@ -15,7 +15,7 @@ const getRecommendations = async (req, res) => {
         const profile = user.profile;
 
         // Define Algorithm Weights
-        const weights = { budgetRange: 3, activityType: 2, climate: 2, tripDuration: 1 };
+        const weights = { budgetRange: 4, activityType: 3, climate: 2, tripDuration: 1 };
 
         // Score each trip
         const scoredTrips = trips.map(trip => {
@@ -36,7 +36,7 @@ const getRecommendations = async (req, res) => {
 
         // Sort and Return Top 5
         const topResults = scoredTrips
-            .sort((a, b) => b.score - a.score)
+            .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name))
             .slice(0, 5);
         console.log("Top 5 Scored Trips:", topResults.map(t => ({ name: t.name, score: t.score })));
 
