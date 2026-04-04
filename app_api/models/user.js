@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
+    trim: true,
   },
   name: {
     type: String,
@@ -15,13 +16,14 @@ const userSchema = new mongoose.Schema({
   // adding role and profile details
   role: {
     type: String,
-    default: 'user'
+    default: "user",
+    enum: ["user", "admin"], // only allow 'user' or 'admin' as valid roles
   },
   profile: {
-    climate: String,
-    activityType: String,
-    budgetRange: String,
-    tripDuration: String
+    climate: { type: String, default: "" },
+    activityType: { type: String, default: "" },
+    budgetRange: { type: String, default: "" },
+    tripDuration: { type: String, default: "" },
   },
   hash: String,
   salt: String,
@@ -48,7 +50,7 @@ userSchema.methods.generateJWT = function () {
       _id: this._id,
       email: this.email,
       name: this.name,
-      role: this.role
+      role: this.role,
     },
     process.env.JWT_SECRET, //SECRET stored in .env file
     { expiresIn: "1h" },

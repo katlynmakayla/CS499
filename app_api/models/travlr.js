@@ -9,12 +9,12 @@ const tripSchema = new mongoose.Schema({
   perPerson: { type: String, required: true },
   image: { type: String, required: true },
   description: { type: String, required: true },
-   tags: {
-    climate: String,
-    activityType: String,
-    budgetRange: String,
-    tripDuration: String
-  }
+  tags: {
+    climate: { type: String, default: "" },
+    activityType: { type: String, default: "" },
+    budgetRange: { type: String, default: "" },
+    tripDuration: { type: String, default: "" },
+  },
 });
 const Trip = mongoose.model("Trip", tripSchema); // had to change to 'Trip' to match mongoose.model usage
 module.exports = Trip;
