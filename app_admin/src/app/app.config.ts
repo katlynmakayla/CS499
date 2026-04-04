@@ -3,6 +3,7 @@ import { provideRouter } from '@angular/router';
 import { HttpClientModule, provideHttpClient } from '@angular/common/http';
 import { routes } from './app.routes';
 import { authInterceptProvider } from './utils/jwt-interceptor'
+import { BROWSER_STORAGE } from './storage';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -10,7 +11,8 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(), 
     importProvidersFrom(HttpClientModule), 
-    authInterceptProvider
+    authInterceptProvider,
+    { provide: BROWSER_STORAGE, useFactory: () => localStorage }
   ]
 };
 
