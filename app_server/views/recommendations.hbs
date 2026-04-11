@@ -105,24 +105,52 @@
 
                 trips.forEach(trip => {
                     const item = `
-                        <div class="recommendation-item">
-                            <div class="match-indicators">
-                                ${trip.matches.map(m => `<span class="badge">${m}</span>`).join('')}
-                            </div>
-                            <a href="/api/trips/${trip.code}"><img src="/images/${trip.image}" alt="${trip.name}"></a>
-                            <div class="rec-info">
-                                <h2><a href="/travel">${trip.name}</a></h2>
-                                <p>${trip.description.substring(0, 150)}...</p>
-                            </div>
+                    <div class="recommendation-item">
+                        <div class="match-indicators">${trip.matches.map(m => `<span class="badge">${m}</span>`).join('')}</div>
+                        <a href="/api/trips/${trip.code}"><img src="/images/${trip.image}" alt="${trip.name}"></a>
+                        <div class="rec-info">
+                            <h2><button onclick="bookTrip('${trip._id}')">Book Trip</button><a href="/travel">${trip.name}</a></h2>
+                            <p>${trip.description.substring(0, 150)}...</p>
                         </div>
-                    `;
+                    </div>
+                `;
                     list.innerHTML += item;
                 });
             } catch (err) {
                 list.innerHTML = '<p>Error loading recommendations.</p>';
             }
         }
+        function bookTrip(tripId) {
+            const token = localStorage.getItem('travlr-token');
+            if (!token) {
+                alert('You must be logged in to book a trip.');
+                return;
+            }
 
+            const travelDate = prompt('Enter your travel date (YYYY-MM-DD):');
+            if (!travelDate) return;
+
+            fetch('/api/bookings', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ tripId, travelDate })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data._id) {
+                        alert('Booking confirmed!');
+                    } else {
+                        alert(data.message || 'Booking failed.');
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert('Something went wrong. Please try again.');
+                });
+        }
         document.addEventListener('DOMContentLoaded', loadRecommendations);
     </script>
 </body>

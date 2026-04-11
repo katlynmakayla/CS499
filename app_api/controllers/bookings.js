@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const Booking = require('../models/bookings');
+require('../models/bookings');
+const Booking = mongoose.model('Booking');
 const Trip = require('../models/travlr');
 
 // POST: /bookings - create a new booking for the authenticated user

@@ -36,7 +36,7 @@ const getRecommendations = async (req, res) => {
 
         // Sort and Return Top 5
         const topResults = scoredTrips
-            .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name))
+            .toSorted((a, b) => b.score - a.score || a.name.localeCompare(b.name))
             .slice(0, 5);
         console.log("Top 5 Scored Trips:", topResults.map(t => ({ name: t.name, score: t.score })));
 
