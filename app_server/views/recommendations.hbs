@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<!-- Website template by freewebsitetemplates.com -->
+<!-- TODO: correct photo link to direct to trip and text to direct to trip itself and not just travel page-->
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Recommendations - Travlr Getaways Web Template</title>
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+    <style>
+        .match-indicators {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        .badge {
+            background-color: #2e7d32;
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .recommendation-item {
+            margin-bottom: 24px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="background">
+        <div id="page">
+            {{> header }}
+            <div id="contents">
+                <div class="box">
+                    <div>
+                        <div class="body">
+                            <h1>Personalized Recommendations</h1>
+                            <p>Based on your profile settings, we've found these perfect getaways for you:</p>
+                            <div id="recs-list" class="section">
+                                <p id="loading-msg">Finding your perfect vacation...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{> footer }}
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const token = localStorage.getItem('travlr-token');
+
+            const recsLink = document.getElementById('nav-recs');
+            const loginLink = document.getElementById('nav-login');
+            const logoutLink = document.getElementById('nav-logout');
+
+            if (token && token !== 'null' && token !== 'undefined') {
+                if (recsLink) recsLink.style.display = 'inline-block';
+                if (logoutLink) logoutLink.style.display = 'inline-block';
+                if (loginLink) loginLink.style.display = 'none';
+            } else {
+                if (recsLink) recsLink.style.display = 'none';
+                if (logoutLink) logoutLink.style.display = 'none';
+                if (loginLink) loginLink.style.display = 'inline-block';
+            }
+        });
+
+        function logout() {
+            localStorage.removeItem('travlr-token');
+            localStorage.removeItem('travlr-user');
+            window.location.assign('/');
+        }
+
+        async function loadRecommendations() {
+            const token = localStorage.getItem('travlr-token');
+            const list = document.getElementById('recs-list');
+
+            if (!token) {
+                list.innerHTML = '<p>Please <a href="/login">login</a> to see recommendations.</p>';
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/recommendations', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (response.status === 401) {
+                    list.innerHTML = '<p>Session expired. Please <a href="/login">login again</a>.</p>';
+                    return;
+                }
+
+                const trips = await response.json();
+                list.innerHTML = '';
+
+                if (trips.length === 0) {
+                    list.innerHTML = '<p>No matches found. Try updating your profile!</p>';
+                    return;
+                }
+
+                trips.forEach(trip => {
+                    const item = `
+                    <div class="recommendation-item">
+                        <div class="match-indicators">${trip.matches.map(m => `<span class="badge">${m}</span>`).join('')}</div>
+                        <a href="/api/trips/${trip.code}"><img src="/images/${trip.image}" alt="${trip.name}"></a>
+                        <div class="rec-info">
+                            <h2><button onclick="bookTrip('${trip._id}')">Book Trip</button><a href="/travel">${trip.name}</a></h2>
+                            <p>${trip.description.substring(0, 150)}...</p>
+                        </div>
+                    </div>
+                `;
+                    list.innerHTML += item;
+                });
+            } catch (err) {
+                list.innerHTML = '<p>Error loading recommendations.</p>';
+            }
+        }
+        function bookTrip(tripId) {
+            const token = localStorage.getItem('travlr-token');
+            if (!token) {
+                alert('You must be logged in to book a trip.');
+                return;
+            }
+
+            const travelDate = prompt('Enter your travel date (YYYY-MM-DD):');
+            if (!travelDate) return;
+
+            fetch('/api/bookings', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ tripId, travelDate })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data._id) {
+                        alert('Booking confirmed!');
+                    } else {
+                        alert(data.message || 'Booking failed.');
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert('Something went wrong. Please try again.');
+                });
+        }
+        document.addEventListener('DOMContentLoaded', loadRecommendations);
+    </script>
+</body>
+
+</html>

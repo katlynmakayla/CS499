@@ -8,15 +8,41 @@
             <li><a href="/travel">Travel</a></li>
             <li><a href="/rooms">Rooms</a></li>
             <li><a href="/meals">Meals</a></li>
-            <li>
-                <a href="/news">News</a>
-            </li>
-            <li>
-                <a href="/about">About</a>
-            </li>
-            <li>
-                <a href="/contact">Contact</a>
-            </li>
+            <li><a href="/news">News</a></li>
+            <li id="nav-recs" style="display: none;"><a href="/recommendations">Recs</a></li>
+            <li><a href="/about">About</a></li>
+            <li id="nav-profile" style="display: none;"><a href="/profile">Profile</a></li>
+            <li id="nav-login"><a href="/login">Login</a></li>
+            <li id="nav-logout" style="display: none;"><a href="#" onclick="logout()">Logout</a></li>
         </ul>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const token = localStorage.getItem('travlr-token');
+
+        const recsLink    = document.getElementById('nav-recs');
+        const profileLink = document.getElementById('nav-profile');
+        const loginLink   = document.getElementById('nav-login');
+        const logoutLink  = document.getElementById('nav-logout');
+
+        if (token && token !== 'null' && token !== 'undefined') {
+            if (recsLink)    recsLink.style.display    = 'inline-block';
+            if (profileLink) profileLink.style.display = 'inline-block';
+            if (logoutLink)  logoutLink.style.display  = 'inline-block';
+            if (loginLink)   loginLink.style.display   = 'none';
+        } else {
+            if (recsLink)    recsLink.style.display    = 'none';
+            if (profileLink) profileLink.style.display = 'none';
+            if (logoutLink)  logoutLink.style.display  = 'none';
+            if (loginLink)   loginLink.style.display   = 'inline-block';
+        }
+    });
+
+    function logout() {
+        localStorage.removeItem('travlr-token');
+        localStorage.removeItem('travlr-user');
+        window.location.assign('/');
+    }
+</script>

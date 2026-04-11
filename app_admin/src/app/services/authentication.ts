@@ -3,6 +3,8 @@ import { BROWSER_STORAGE } from '../storage';
 import { User } from '../models/user';
 import { AuthResponse } from '../models/auth-response';
 import { TripData } from './trip-data';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -38,8 +40,10 @@ export class Authentication {
   // Logout of our application and remove the JWT from Storage
   public logout(): void {
     this.storage.removeItem('travlr-token');
+    this.storage.removeItem('travlr-user');
   }
   private decodeJwtPayload(token: string): any {
+    if (!token) return null;
     try {
       const parts = token.split('.');
       if (parts.length !== 3) return null;
@@ -53,20 +57,7 @@ export class Authentication {
       return null;
     }
   }
-  // Boolean to determine if we are logged in and the token is
-  // still valid. Even if we have a token we will still have to
-  // reauthenticate if the token has expired
-  /*
-  public isLoggedIn(): boolean {
-    const token: string = this.getToken();
-    if (token) {
-      const payload = this.decodeJwtPayload(token);
-
-      return payload.exp > Date.now() / 1000;
-    } else {
-      return false;
-    }
-  }*/
+  /* original isLoggedIn method
   public isLoggedIn(): boolean {
     const token = this.getToken();
     if (!token) return false;
@@ -77,7 +68,17 @@ export class Authentication {
 
     return exp > Date.now() / 1000;
   }
+    */
+  public isLoggedIn(): boolean {
+    const payload = this.decodeJwtPayload(this.getToken());
+    if (!payload || typeof payload.exp !== 'number') {
+      this.logout(); // automatically invalidate token
+      return false;
+    }
+    return !!payload && typeof payload.exp === 'number' && payload.exp > Date.now() / 1000;
+  }
 
+  /* original getCurrentUser method
   // Retrieve the current user. This function should only be called
   // after the calling method has checked to make sure that the user
   // isLoggedIn.
@@ -86,25 +87,44 @@ export class Authentication {
     const { email, name } = JSON.parse(atob(token.split('.')[1]));
     return { email, name } as User;
   }
+    */
+  public getCurrentUser(): User | null {
+    //const token = this.getToken();
+    //if (!token) return null;
+    // get stored user first to avoid unnecessary token decoding
+    const storedUser = this.getStoredUser();
+    if (storedUser) return storedUser;
+
+    const payload = this.decodeJwtPayload(this.getToken());
+    if (!payload) return null;
+
+    return {
+      _id: payload._id,
+      email: payload.email,
+      name: payload.name,
+      role: payload.role,
+    } as User;
+  }
 
   // Login method that leverages the login method in tripDataService
   // Because that method returns an observable, we subscribe to the
   // result and only process when the Observable condition is satisfied
   // Uncomment the two console.log messages for additional debugging
   // information.
-  public login(user: User, passwd: string): void {
-    this.tripDataService.login(user, passwd).subscribe({
-      next: (value: any) => {
+  public login(user: User, passwd: string): Observable<any> {
+    return this.tripDataService.login(user, passwd).pipe(
+      tap((value: any) => {
         if (value) {
           console.log(value);
           this.authResponse = value;
-          this.saveToken(this.authResponse.token);
+          // save the token and user information to storage
+          this.saveToken(value.token);
+          if (value.user) {
+            this.saveUser(value.user);
+          }
         }
-      },
-      error: (error: any) => {
-        console.log('Error: ' + error);
-      },
-    });
+      }),
+    );
   }
   // Register method that leverages the register method in
   // tripDataService
@@ -114,23 +134,6 @@ export class Authentication {
   // information. Please Note: This method is nearly identical to the
   // login method because the behavior of the API logs a new user in
   // immediately upon registration
-  /*
-  public register(user: User, passwd: string): void {
-    this.tripDataService.register(user, passwd)
-      .subscribe({
-        next: (value: any) => {
-          if (value) {
-            console.log(value);
-            this.authResponse = value;
-            this.saveToken(this.authResponse.token);
-          }
-        },
-        error: (error: any) => {
-          console.log('Error: ' + error);
-        }
-      })
-  } 
-      */
   // updated to account for existing account
   public lastError: string | null = null;
 
@@ -142,7 +145,10 @@ export class Authentication {
         next: (value: any) => {
           if (value) {
             this.authResponse = value;
-            this.saveToken(this.authResponse.token);
+            this.saveToken(value.token);
+            if (value.user) {
+              this.saveUser(value.user);
+            }
             resolve();
           }
         },
@@ -158,5 +164,22 @@ export class Authentication {
         },
       });
     });
+  }
+
+  // Method to check if the current user is an admin
+  public isAdmin(): boolean {
+    const user = this.getCurrentUser();
+    //console.log('Checking admin status for user:', user);
+    console.log('Current User in isAdmin check:', user); 
+    return user?.role === 'admin';
+  }
+  // Method to save the current user to storage
+  public saveUser(user: User): void {
+    this.storage.setItem('travlr-user', JSON.stringify(user));
+  }
+  // Method to get the current user from storage
+  public getStoredUser(): User | null {
+    const data = this.storage.getItem('travlr-user');
+    return data ? JSON.parse(data) : null;
   }
 }

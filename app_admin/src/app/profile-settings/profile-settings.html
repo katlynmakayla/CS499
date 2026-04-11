@@ -1,0 +1,42 @@
+<div class="container">
+    <h2>Travel Preferences</h2>
+    <form (ngSubmit)="onSave()">
+        <div class="form-group">
+            <div class="form-group">
+                <label>Preferred Budget Range</label>
+                <select [(ngModel)]="profile.budgetRange" name="budgetRange" class="form-control">
+                    <option value="budget">Budget</option>
+                    <option value="midrange">Mid-range</option>
+                    <option value="luxury">Luxury</option>
+                </select>
+            </div>
+
+            <label>Preferred Climate</label>
+            <select [(ngModel)]="profile.climate" name="climate" class="form-control">
+                <option value="tropical">Tropical</option>
+                <option value="cold">Cold/Snowy</option>
+                <option value="dry">Desert/Arid</option>
+                <option value="temperate">Mild/Temperate</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Preferred Activity Type</label>
+            <select [(ngModel)]="profile.activityType" name="activityType" class="form-control">
+                <option value="adventure">Adventure</option>
+                <option value="relaxation">Relaxation</option>
+                <option value="cultural">Cultural/Historic</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Preferred Trip Duration</label>
+            <select [(ngModel)]="profile.tripDuration" name="tripDuration" class="form-control">
+                <option value="weekend">Weekend (1-3 days)</option>
+                <option value="week">Week (4-7 days)</option>
+                <option value="extended">Extended (8+ days)</option>
+            </select>
+        </div>
+            <button type="submit" class="btn btn-primary">Save Profile</button>
+    </form>
+</div>

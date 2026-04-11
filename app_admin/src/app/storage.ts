@@ -5,5 +5,4 @@ export const BROWSER_STORAGE = new InjectionToken<Storage>('Browser Storage', {
     factory: () => localStorage
 });
 
-export class Storage {
-}
+//export class Storage {}
