@@ -14,7 +14,7 @@
     "express": "^4.22.1",
     "express-jwt": "^8.5.1",
     "handlebars": "^4.7.9",
-    "hbs": "^3.1.1",
+    "hbs": "^4.2.1",
     "http-errors": "~1.6.3",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.3.1",
