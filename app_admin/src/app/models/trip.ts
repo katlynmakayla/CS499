@@ -2,10 +2,10 @@ export interface Trip {
     _id: string; // Internal primary key in MongoDB
     code: string;
     name: string;
-    length: string;
+    lengthInDays: number;
     start: Date;
     resort: string;
-    perPerson: string;
+    price: number;
     image: string;
     description: string;
 }

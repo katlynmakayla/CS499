@@ -58,12 +58,19 @@ const tripsAddTrip = async (req, res) => {
     const newTrip = new Trip({
         code: req.body.code,
         name: req.body.name,
-        length: req.body.length,
+        lengthInDays: req.body.lengthInDays,
         start: req.body.start,
         resort: req.body.resort,
-        perPerson: req.body.perPerson,
+        price: req.body.price,
         image: req.body.image,
-        description: req.body.description
+        description: req.body.description,
+        tags: {
+            climate: req.body.tags?.climate,
+            activityType: req.body.tags?.activityType,
+            budgetRange: req.body.tags?.budgetRange,
+            tripDuration: req.body.tags?.tripDuration,
+        }
+        
     });
 
     const q = await newTrip.save(); // save the new trip to the database
@@ -97,12 +104,18 @@ const tripsUpdateTrip = async (req, res) => {
             {
                 code: req.body.code,
                 name: req.body.name,
-                length: req.body.length,
+                lengthInDays: req.body.lengthInDays,
                 start: req.body.start,
                 resort: req.body.resort,
-                perPerson: req.body.perPerson,
+                price: req.body.price,
                 image: req.body.image,
-                description: req.body.description
+                description: req.body.description,
+                tags: {
+                    climate: req.body.tags?.climate,
+                    activityType: req.body.tags?.activityType,
+                    budgetRange: req.body.tags?.budgetRange,
+                    tripDuration: req.body.tags?.tripDuration,
+                }
             },
         )
         .exec();

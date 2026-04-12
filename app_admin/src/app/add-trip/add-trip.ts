@@ -30,18 +30,24 @@ export class AddTrip implements OnInit {
       return;
     }
 
-    this.addForm = this.formBuilder.group({
-      _id: [],
-      code: ['', Validators.required],
-      name: ['', Validators.required],
-      length: ['', Validators.required],
-      start: ['', Validators.required],
-      resort: ['', Validators.required],
-      perPerson: ['', Validators.required],
-      image: ['', Validators.required],
-      description: ['', Validators.required],
-    });
-  }
+  this.addForm = this.formBuilder.group({
+    _id: [],
+    code: ['', Validators.required],
+    name: ['', Validators.required],
+    lengthInDays: ['', Validators.required], 
+    start: ['', Validators.required],
+    resort: ['', Validators.required],
+    price: ['', Validators.required],
+    image: ['', Validators.required],
+    description: ['', Validators.required],
+    tags: this.formBuilder.group({             
+      climate: ['', Validators.required],
+      activityType: ['', Validators.required],
+      budgetRange: ['', Validators.required],
+      tripDuration: ['', Validators.required],
+    }),
+  });
+}
   public onSubmit(): void {
     this.submitted = true;
 
