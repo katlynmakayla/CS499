@@ -16,13 +16,61 @@
 					<div>
 						<div class="body">
 							<h1>Travel</h1>
-							<ul id="sites">
+							<ul id="sites" style="list-style: none; padding: 0;">
 								{{#each trips}}
-								<li>
-									<button onclick="bookTrip('{{this._id}}')">Book Trip</button>
-									<a href="/api/trips/{{this.code}}"><img src="/images/{{this.image}}" alt="Img"></a>
-									<h2><a href="/travel">{{this.name}}</a></h2>
-									<p>{{{this.description}}}</p>
+								<li style="padding-bottom: 12px; margin-bottom: 12px;">
+									<table style="border-collapse: collapse;">
+										<tr>
+											<td style="vertical-align: top; padding-right: 20px; width: 220px;">
+												<div style="width: 220px;">
+													<a href="/api/trips/{{this.code}}">
+														<img src="/images/{{this.image}}" alt="{{this.name}}"
+															width="220px" style="display: block;">
+													</a>
+												</div>
+											</td>
+											<td style="vertical-align: top;">
+												<h2 style="margin: 0 0 8px 0;"><a href="/travel">{{this.name}}</a></h2>
+												<button style="display: block; width: 100px;"
+													onclick="bookTrip('{{this._id}}')">Book Trip</button>
+												<p>{{{this.description}}}</p>
+												<table>
+													<tr>
+														<td><strong>Resort</strong></td>
+														<td>{{this.resort}}</td>
+													</tr>
+													<tr>
+														<td><strong>Start Date</strong></td>
+														<td class="start-date">{{this.start}}</td>
+													</tr>
+													<tr>
+														<td><strong>Length</strong></td>
+														<td>{{this.lengthInDays}} days</td>
+													</tr>
+													<tr>
+														<td><strong>Price</strong></td>
+														<td>${{this.price}} per person</td>
+													</tr>
+													<tr>
+														<td><strong>Climate</strong></td>
+														<td>{{this.tags.climate}}</td>
+													</tr>
+													<tr>
+														<td><strong>Activity</strong></td>
+														<td>{{this.tags.activityType}}</td>
+													</tr>
+													<tr>
+														<td><strong>Budget</strong></td>
+														<td>{{this.tags.budgetRange}}</td>
+													</tr>
+													<tr>
+														<td><strong>Duration</strong></td>
+														<td>{{this.tags.tripDuration}}</td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
 								</li>
 								{{/each}}
 							</ul>
@@ -35,6 +83,15 @@
 	</div>
 
 	<script>
+		document.querySelectorAll('.start-date').forEach(el => {
+			const date = new Date(el.textContent);
+			el.textContent = date.toLocaleDateString('en-US', {
+				year: 'numeric',
+				month: 'long',
+				day: 'numeric'
+			});
+		});
+
 		function bookTrip(tripId) {
 			const token = localStorage.getItem('travlr-token');
 			if (!token) {

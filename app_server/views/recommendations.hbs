@@ -1,6 +1,4 @@
 <!DOCTYPE html>
-<!-- Website template by freewebsitetemplates.com -->
-<!-- TODO: correct photo link to direct to trip and text to direct to trip itself and not just travel page-->
 <html>
 
 <head>
@@ -8,24 +6,9 @@
     <title>Recommendations - Travlr Getaways Web Template</title>
     <link rel="stylesheet" href="/css/style.css" type="text/css">
     <style>
-        .match-indicators {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-bottom: 10px;
-        }
-
-        .badge {
-            background-color: #2e7d32;
-            color: #fff;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
         .recommendation-item {
-            margin-bottom: 24px;
+            padding-bottom: 12px;
+            margin-bottom: 12px;
         }
     </style>
 </head>
@@ -104,22 +87,53 @@
                 }
 
                 trips.forEach(trip => {
+                    const highlight = (field) => trip.matches.includes(field)
+                        ? 'style="background-color: #c8e6c9; font-weight: bold;"'
+                        : '';
+
+                    const startDate = new Date(trip.start).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+
                     const item = `
-                    <div class="recommendation-item">
-                        <div class="match-indicators">${trip.matches.map(m => `<span class="badge">${m}</span>`).join('')}</div>
-                        <a href="/api/trips/${trip.code}"><img src="/images/${trip.image}" alt="${trip.name}"></a>
-                        <div class="rec-info">
-                            <h2><button onclick="bookTrip('${trip._id}')">Book Trip</button><a href="/travel">${trip.name}</a></h2>
-                            <p>${trip.description.substring(0, 150)}...</p>
+                        <div class="recommendation-item">
+                            <table style="border-collapse: collapse;">
+                                <tr>
+                                    <td style="vertical-align: top; padding-right: 20px; width: 220px;">
+                                        <div style="width: 220px;">
+                                            <a href="/api/trips/${trip.code}">
+                                                <img src="/images/${trip.image}" alt="${trip.name}" width="220" style="display: block;">
+                                            </a>
+                                            <button style="display: block; width: 220px;" onclick="bookTrip('${trip._id}')">Book Trip</button>
+                                        </div>
+                                    </td>
+                                    <td style="vertical-align: top;">
+                                        <h2 style="margin: 0 0 8px 0;"><a href="/travel">${trip.name}</a></h2>
+                                        <p>${trip.description}</p>
+                                        <table>
+                                            <tr><td><strong>Resort</strong></td>    <td>${trip.resort}</td></tr>
+                                            <tr><td><strong>Start Date</strong></td><td>${startDate}</td></tr>
+                                            <tr><td><strong>Length</strong></td>    <td>${trip.lengthInDays} days</td></tr>
+                                            <tr><td><strong>Price</strong></td>     <td>$${trip.price} per person</td></tr>
+                                            <tr ${highlight('climate')}><td><strong>Climate</strong></td>       <td>${trip.tags?.climate ?? ''}</td></tr>
+                                            <tr ${highlight('activityType')}><td><strong>Activity</strong></td> <td>${trip.tags?.activityType ?? ''}</td></tr>
+                                            <tr ${highlight('budgetRange')}><td><strong>Budget</strong></td>    <td>${trip.tags?.budgetRange ?? ''}</td></tr>
+                                            <tr ${highlight('tripDuration')}><td><strong>Duration</strong></td> <td>${trip.tags?.tripDuration ?? ''}</td></tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
-                    </div>
-                `;
+                    `;
                     list.innerHTML += item;
                 });
             } catch (err) {
                 list.innerHTML = '<p>Error loading recommendations.</p>';
             }
         }
+
         function bookTrip(tripId) {
             const token = localStorage.getItem('travlr-token');
             if (!token) {
@@ -151,6 +165,7 @@
                     alert('Something went wrong. Please try again.');
                 });
         }
+
         document.addEventListener('DOMContentLoaded', loadRecommendations);
     </script>
 </body>
