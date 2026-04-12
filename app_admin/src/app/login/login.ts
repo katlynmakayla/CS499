@@ -71,7 +71,7 @@ export class Login {
           } else {
             console.log('User detected, routing to travel site');
             // make sure it picks up the new localStorage data on refresh
-            window.location.href = 'http://localhost:3000';
+            globalThis.location.href = 'http://localhost:3000';
           }
         }
       },
