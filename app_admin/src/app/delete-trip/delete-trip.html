@@ -4,41 +4,45 @@
 
   <!-- Show the form once deleteForm is initialized -->
   <form [formGroup]="deleteForm" (ngSubmit)="onSubmit()" *ngIf="deleteForm">
-    <div>
-      <label for="code">Code:</label>
-      <input id="code" formControlName="code" />
-    </div>
-    <div>
-      <label for="name">Name:</label>
-      <input id="name" formControlName="name" />
-    </div>
-    <div>
-      <label for="length">Length:</label>
-      <input id="length" formControlName="length" />
-    </div>
-    <div>
-      <label for="start">Start:</label>
-      <input id="start" formControlName="start"  />
-    </div>
-    <div>
-      <label for="resort">Resort:</label>
-      <input id="resort" formControlName="resort" />
-    </div>
-    <div>
-      <label for="perPerson">Per Person:</label>
-      <input id="perPerson" formControlName="perPerson"  />
-    </div>
-    <div>
-      <label for="image">Image URL:</label>
-      <input id="image" formControlName="image"  />
-    </div>
-    <div>
-      <label for="description">Description:</label>
-      <textarea id="description" formControlName="description" ></textarea>
-    </div>
+    <table>
+      <tr>
+        <td><label for="code">Code:</label></td>
+        <td><input id="code" formControlName="code" /></td>
+      </tr>
+      <tr>
+        <td><label for="name">Name:</label></td>
+        <td><input id="name" formControlName="name" /></td>
+      </tr>
+      <tr>
+        <td><label for="lengthInDays">Length:</label></td>
+        <td><input id="lengthInDays" formControlName="lengthInDays" /></td>
+      </tr>
+      <tr>
+        <td><label for="start">Start:</label></td>
+        <td><input id="start" formControlName="start" /></td>
+      </tr>
+      <tr>
+        <td><label for="resort">Resort:</label></td>
+        <td><input id="resort" formControlName="resort" /></td>
+      </tr>
+      <tr>
+        <td><label for="price">Price Per Person:</label></td>
+        <td><input id="price" formControlName="price" /></td>
+      </tr>
+      <tr>
+        <td><label for="image">Image URL:</label></td>
+        <td><input id="image" formControlName="image" /></td>
+      </tr>
+      <tr>
+        <td><label for="description">Description:</label></td>
+        <td><textarea id="description" formControlName="description"></textarea></td>
+      </tr>
+    </table>
 
-    <button type="submit">Delete Trip</button>
-    <button type="button" (click)="backToListing()">Cancel</button>
+    <div style="margin-top: 12px;">
+      <button type="submit">Delete Trip</button>
+      <button type="button" (click)="backToListing()">Cancel</button>
+    </div>
   </form>
 
   <!-- Message after deletion or if trip not found -->
