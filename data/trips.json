@@ -1,32 +1,274 @@
-[
-  {
-    "code": "GALR210214",
-    "name": "Gale Reef",
-    "length": "4 nights / 5 days",
-    "start": "2021-02-14T08:00:00Z",
-    "resort": "Emerald Bay, 3 stars",
-    "perPerson": "799.00",
-    "image": "reef1.jpg",
-    "description": "Gale Reef Sed et augue lorem. In sit amet placerat arcu. Mauris volutpat ipsum ac justo mollis vel vestibulum orci gravida. Vestibulum sit amet porttitor odio. Nulla facilisi. Fusce at pretium felis.</p><p>Sed consequat libero ut turpis venenatis ut aliquam risus semper. Etiam convallis mi vel risus pretium sodales. Etiam nunc lorem ullamcorper vitae laoreet.</p>"
+[{
+  "_id": {
+    "$oid": "69752c573fad0a577e23a037"
   },
-  {
-    "code": "DAWR210315",
-    "name": "Dawson's Reef",
-    "length": "4 nights / 5 days",
-    "start": "2021-03-15T08:00:00Z",
-    "resort": "Blue Lagoon, 4 stars",
-    "perPerson": "1199.00",
-    "image": "reef2.jpg",
-    "description": "Dawson's Reef Integer magna leo, posuere et dignissim vitae, porttitor at odio. Pellentesque a metus nec magna placerat volutpat. Nunc nisi mi, elementum sit amet aliquet quis, tristique quis nisl. Curabitur odio lacus, blandit ut hendrerit.</p><p>vulputate, vulputate at est. Morbi aliquet viverra metus eu consectetur. In lorem dui, elementum sit amet convallis ac, tincidunt vel sapien.</p>"
+  "name": "Gale Reef",
+  "image": "reef1.jpg",
+  "description": "Gale Reef Sed et augue lorem. In sit amet placerat arcu. Mauris volutpat ipsum ac justo mollis vel vestibulum orci gravida. Vestibulum sit amet porttitor odio. Nulla facilisi. Fusce at pretium felis.</p><p>Sed consequat libero ut turpis venenatis ut aliquam risus semper. Etiam convallis mi vel risus pretium sodales. Etiam nunc lorem ullamcorper vitae laoreet.</p>",
+  "price": 799,
+  "lengthInDays": 3,
+  "tags": {
+    "climate": "arid",
+    "activityType": "adventure",
+    "budgetRange": "luxury",
+    "tripDuration": "extended"
   },
-  {
-    "code": "CLAR210621",
-    "name": "Claire's Reef",
-    "length": "4 nights / 5 days",
-    "start": "2021-06-21T08:00:00Z",
-    "resort": "Coral Sands, 5 stars",
-    "perPerson": "1999.00",
-    "image": "reef3.jpg",
-    "description": "Claire's Reef Donec sed felis risus. Nulla facilisi. Donec a orci tellus, et auctor odio. Fusce ac orci nibh, quis semper arcu. Cras orci neque, euismod et accumsan ac, sagittis molestie lorem. Proin odio sapien, elementum at tempor non.</p><p>Vulputate eget libero. In hac habitasse platea dictumst. Integer purus justo, egestas eu consectetur eu, cursus in tortor. Quisque nec nunc ac mi ultrices iaculis.</p>"
+  "code": "GR001",
+  "resort": "Test Resort",
+  "start": {
+    "$date": {
+      "$numberLong": "-23595926400000"
+    }
   }
-]
+},
+{
+  "_id": {
+    "$oid": "69752c573fad0a577e23a038"
+  },
+  "name": "Dawson's Reef",
+  "image": "reef2.jpg",
+  "description": "Dawson's Reef Integer magna leo, posuere et dignissim vitae, porttitor at odio. Pellentesque a metus nec magna placerat volutpat. Nunc nisi mi, elementum sit amet aliquet quis, tristique quis nisl. Curabitur odio lacus, blandit ut hendrerit.</p><p>vulputate, vulputate at est. Morbi aliquet viverra metus eu consectetur. In lorem dui, elementum sit amet convallis ac, tincidunt vel sapien.</p>",
+  "price": 1199,
+  "lengthInDays": 15,
+  "tags": {
+    "budgetRange": "luxury",
+    "activityType": "adventure",
+    "tripDuration": "extended",
+    "climate": "tropical"
+  },
+  "code": "DR001",
+  "start": {
+    "$date": "2026-08-12T00:00:00.000Z"
+  },
+  "resort": "Test Resort"
+},
+{
+  "_id": {
+    "$oid": "69752c573fad0a577e23a039"
+  },
+  "name": "Claire's Reef",
+  "image": "reef3.jpg",
+  "description": "Claire's Reef Donec sed felis risus. Nulla facilisi. Donec a orci tellus, et auctor odio. Fusce ac orci nibh, quis semper arcu. Cras orci neque, euismod et accumsan ac, sagittis molestie lorem. Proin odio sapien, elementum at tempor non.</p><p>Vulputate eget libero. In hac habitasse platea dictumst. Integer purus justo, egestas eu consectetur eu, cursus in tortor. Quisque nec nunc ac mi ultrices iaculis.</p>",
+  "price": 2400,
+  "lengthInDays": 5,
+  "tags": {
+    "budgetRange": "luxury",
+    "activityType": "adventure",
+    "tripDuration": "week",
+    "climate": "tropical"
+  },
+  "start": {
+    "$date": "2027-04-12T00:00:00.000Z"
+  },
+  "resort": "Test Resort"
+},
+{
+  "_id": {
+    "$oid": "69d07861ad59f77842c5362c"
+  },
+  "code": "GAT001",
+  "name": "Gatlinburg Mountain Escape",
+  "start": {
+    "$date": "2025-06-14T00:00:00.000Z"
+  },
+  "resort": "Park Vista Resort",
+  "image": "reef1.jpg",
+  "description": "Explore the smoky mountains, local distilleries, and cozy cabin retreats in the heart of Gatlinburg, Tennessee.",
+  "tags": {
+    "climate": "temperate",
+    "activityType": "adventure",
+    "budgetRange": "midrange",
+    "tripDuration": "extended"
+  },
+  "price": 400,
+  "lengthInDays": 9
+},
+{
+  "_id": {
+    "$oid": "69d07861ad59f77842c5362d"
+  },
+  "code": "GAT002",
+  "name": "Gatlinburg Luxury Retreat",
+  "start": {
+    "$date": "2025-07-04T00:00:00.000Z"
+  },
+  "resort": "The Lodge at Buckberry Creek",
+  "image": "reef2.jpg",
+  "description": "Unwind in a luxury mountain lodge with spa services, fine dining, and stunning views of the Great Smoky Mountains.",
+  "tags": {
+    "climate": "temperate",
+    "activityType": "relaxation",
+    "budgetRange": "luxury",
+    "tripDuration": "week"
+  },
+  "price": 1299,
+  "lengthInDays": 7
+},
+{
+  "_id": {
+    "$oid": "69d07861ad59f77842c5362e"
+  },
+  "code": "BHM001",
+  "name": "Birmingham City Break",
+  "start": {
+    "$date": "2025-05-10T00:00:00.000Z"
+  },
+  "resort": "The Elyton Hotel",
+  "image": "reef3.jpg",
+  "description": "Discover Birmingham's thriving food scene, civil rights history, and vibrant arts district on this urban weekend getaway.",
+  "tags": {
+    "climate": "temperate",
+    "activityType": "cultural",
+    "budgetRange": "budget",
+    "tripDuration": "weekend"
+  },
+  "price": 299,
+  "lengthInDays": 2
+},
+{
+  "_id": {
+    "$oid": "69d07861ad59f77842c5362f"
+  },
+  "code": "BHM002",
+  "name": "Birmingham Food & Culture Tour",
+  "start": {
+    "$date": "2025-09-01T00:00:00.000Z"
+  },
+  "resort": "Autograph Collection Birmingham",
+  "image": "reef1.jpg",
+  "description": "Spend a week immersed in Birmingham's award-winning restaurant scene, local breweries, and historic landmarks.",
+  "tags": {
+    "climate": "temperate",
+    "activityType": "cultural",
+    "budgetRange": "midrange",
+    "tripDuration": "week"
+  },
+  "price": 749,
+  "lengthInDays": 5
+},
+{
+  "_id": {
+    "$oid": "69d07861ad59f77842c53630"
+  },
+  "code": "CHA001",
+  "name": "Chattanooga Adventure Weekend",
+  "start": {
+    "$date": "2025-08-22T00:00:00.000Z"
+  },
+  "resort": "Chattanooga Choo Choo Hotel",
+  "image": "reef2.jpg",
+  "description": "Rock climbing at Lookout Mountain, kayaking the Tennessee River, and exploring the famous Tennessee Aquarium.",
+  "tags": {
+    "climate": "temperate",
+    "activityType": "adventure",
+    "budgetRange": "budget",
+    "tripDuration": "weekend"
+  },
+  "price": 379,
+  "lengthInDays": 3
+},
+{
+  "_id": {
+    "$oid": "69d07861ad59f77842c53631"
+  },
+  "code": "CHA002",
+  "name": "Chattanooga Luxury River Stay",
+  "start": {
+    "$date": "2025-10-14T00:00:00.000Z"
+  },
+  "resort": "The Westin Chattanooga",
+  "image": "reef3.jpg",
+  "description": "An extended luxury stay along the Tennessee River with guided excursions, fine dining, and premium spa access.",
+  "tags": {
+    "climate": "temperate",
+    "activityType": "relaxation",
+    "budgetRange": "luxury",
+    "tripDuration": "week"
+  },
+  "price": 1899,
+  "lengthInDays": 6
+},
+{
+  "_id": {
+    "$oid": "69d07861ad59f77842c53632"
+  },
+  "code": "HSV001",
+  "name": "Huntsville Space & Science Weekend",
+  "start": {
+    "$date": "2025-06-01T00:00:00.000Z"
+  },
+  "resort": "Marriott Huntsville",
+  "image": "reef1.jpg",
+  "description": "Visit the US Space & Rocket Center, Monte Sano State Park, and Huntsville's growing craft beer and food scene.",
+  "tags": {
+    "climate": "temperate",
+    "activityType": "cultural",
+    "budgetRange": "midrange",
+    "tripDuration": "weekend"
+  },
+  "price": 349,
+  "lengthInDays": 2
+},
+{
+  "_id": {
+    "$oid": "69d07861ad59f77842c53633"
+  },
+  "code": "NAH001",
+  "name": "Nashville Music City Week",
+  "start": {
+    "$date": "2025-07-20T00:00:00.000Z"
+  },
+  "resort": "Grand Hyatt Nashville",
+  "image": "reef2.jpg",
+  "description": "Live music on Broadway, hot chicken, and honky-tonks — a full week soaking in everything Music City has to offer.",
+  "tags": {
+    "climate": "temperate",
+    "activityType": "cultural",
+    "budgetRange": "midrange",
+    "tripDuration": "week"
+  },
+  "price": 999,
+  "lengthInDays": 6
+},
+{
+  "_id": {
+    "$oid": "69d07861ad59f77842c53634"
+  },
+  "code": "ATL001",
+  "name": "Atlanta Extended City Experience",
+  "start": {
+    "$date": "2025-11-01T00:00:00.000Z"
+  },
+  "resort": "Four Seasons Atlanta",
+  "image": "reef3.jpg",
+  "description": "Explore the Georgia Aquarium, World of Coca-Cola, Piedmont Park, and Atlanta's world-class dining over an extended luxury stay.",
+  "tags": {
+    "climate": "temperate",
+    "activityType": "cultural",
+    "budgetRange": "luxury",
+    "tripDuration": "extended"
+  },
+  "price": 2499,
+  "lengthInDays": 9
+},
+{
+  "_id": {
+    "$oid": "69d07861ad59f77842c53635"
+  },
+  "code": "MOB001",
+  "name": "Mobile Gulf Coast Getaway",
+  "start": {
+    "$date": "2025-08-05T00:00:00.000Z"
+  },
+  "resort": "Battle House Renaissance Hotel",
+  "image": "reef1.jpg",
+  "description": "Sun, seafood, and history along Alabama's Gulf Coast — visit USS Alabama, white sand beaches, and Mardi Gras museums.",
+  "tags": {
+    "climate": "tropical",
+    "activityType": "relaxation",
+    "budgetRange": "midrange",
+    "tripDuration": "week"
+  },
+  "price": 599,
+  "lengthInDays": 4
+}]
