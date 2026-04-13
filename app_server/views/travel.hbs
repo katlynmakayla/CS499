@@ -16,63 +16,22 @@
 					<div>
 						<div class="body">
 							<h1>Travel</h1>
+
+							<div style="margin-bottom: 12px;">
+								<label for="sort-select"><strong>Sort by:</strong></label>
+								<select id="sort-select" onchange="sortTrips()">
+									<option value="none">Select Sort Option</option>
+									<option value="price-asc">Price: Low to High</option>
+									<option value="price-desc">Price: High to Low</option>
+									<option value="length-asc">Length: Shortest First</option>
+									<option value="length-desc">Length: Longest First</option>
+									<option value="start-asc">Start Date: Earliest First</option>
+									<option value="start-desc">Start Date: Latest First</option>
+								</select>
+							</div>
+
 							<ul id="sites" style="list-style: none; padding: 0;">
-								{{#each trips}}
-								<li style="padding-bottom: 12px; margin-bottom: 12px;">
-									<table style="border-collapse: collapse;">
-										<tr>
-											<td style="vertical-align: top; padding-right: 20px; width: 220px;">
-												<div style="width: 220px;">
-													<a href="/api/trips/{{this.code}}">
-														<img src="/images/{{this.image}}" alt="{{this.name}}"
-															width="220px" style="display: block;">
-													</a>
-												</div>
-											</td>
-											<td style="vertical-align: top;">
-												<h2 style="margin: 0 0 8px 0;"><a href="/travel">{{this.name}}</a></h2>
-												<button style="display: block; width: 100px;"
-													onclick="bookTrip('{{this._id}}')">Book Trip</button>
-												<p>{{{this.description}}}</p>
-												<table>
-													<tr>
-														<td><strong>Resort</strong></td>
-														<td>{{this.resort}}</td>
-													</tr>
-													<tr>
-														<td><strong>Start Date</strong></td>
-														<td class="start-date">{{this.start}}</td>
-													</tr>
-													<tr>
-														<td><strong>Length</strong></td>
-														<td>{{this.lengthInDays}} days</td>
-													</tr>
-													<tr>
-														<td><strong>Price</strong></td>
-														<td>${{this.price}} per person</td>
-													</tr>
-													<tr>
-														<td><strong>Climate</strong></td>
-														<td>{{this.tags.climate}}</td>
-													</tr>
-													<tr>
-														<td><strong>Activity</strong></td>
-														<td>{{this.tags.activityType}}</td>
-													</tr>
-													<tr>
-														<td><strong>Budget</strong></td>
-														<td>{{this.tags.budgetRange}}</td>
-													</tr>
-													<tr>
-														<td><strong>Duration</strong></td>
-														<td>{{this.tags.tripDuration}}</td>
-													</tr>
-												</table>
-											</td>
-										</tr>
-									</table>
-								</li>
-								{{/each}}
+								<p id="loading-msg">Loading trips...</p>
 							</ul>
 						</div>
 					</div>
@@ -83,14 +42,72 @@
 	</div>
 
 	<script>
-		document.querySelectorAll('.start-date').forEach(el => {
-			const date = new Date(el.textContent);
-			el.textContent = date.toLocaleDateString('en-US', {
+		let allTrips = [];
+
+		function formatDate(dateStr) {
+			return new Date(dateStr).toLocaleDateString('en-US', {
 				year: 'numeric',
 				month: 'long',
 				day: 'numeric'
 			});
-		});
+		}
+
+		function renderTrips(trips) {
+			const list = document.getElementById('sites');
+			list.innerHTML = trips.map(trip => `
+				<li style="padding-bottom: 12px; margin-bottom: 12px;">
+					<table style="border-collapse: collapse;">
+						<tr>
+							<td style="vertical-align: top; padding-right: 20px; width: 220px;">
+								<div style="width: 220px;">
+									<a href="/api/trips/${trip.code}">
+										<img src="/images/${trip.image}" alt="${trip.name}" width="220" style="display: block;">
+									</a>
+								</div>
+							</td>
+							<td style="vertical-align: top;">
+								<h2 style="margin: 0 0 8px 0;"><a href="/travel">${trip.name}</a></h2>
+								<button style="display: block; width: 100px;" onclick="bookTrip('${trip._id}')">Book Trip</button>
+								<p>${trip.description}</p>
+								<table>
+									<tr><td><strong>Resort</strong></td>    <td>${trip.resort}</td></tr>
+									<tr><td><strong>Start Date</strong></td><td>${formatDate(trip.start)}</td></tr>
+									<tr><td><strong>Length</strong></td>    <td>${trip.lengthInDays} days</td></tr>
+									<tr><td><strong>Price</strong></td>     <td>$${trip.price} per person</td></tr>
+									<tr><td><strong>Climate</strong></td>   <td>${trip.tags?.climate ?? ''}</td></tr>
+									<tr><td><strong>Activity</strong></td>  <td>${trip.tags?.activityType ?? ''}</td></tr>
+									<tr><td><strong>Budget</strong></td>    <td>${trip.tags?.budgetRange ?? ''}</td></tr>
+									<tr><td><strong>Duration</strong></td>  <td>${trip.tags?.tripDuration ?? ''}</td></tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</li>
+			`).join('');
+		}
+
+		function sortTrips() {
+			const value = document.getElementById('sort-select').value;
+			const sorted = [...allTrips];
+			if (value === 'price-asc') sorted.sort((a, b) => a.price - b.price);
+			if (value === 'price-desc') sorted.sort((a, b) => b.price - a.price);
+			if (value === 'length-asc') sorted.sort((a, b) => a.lengthInDays - b.lengthInDays);
+			if (value === 'length-desc') sorted.sort((a, b) => b.lengthInDays - a.lengthInDays);
+			if (value === 'start-asc') sorted.sort((a, b) => Date.parse(a.start) - Date.parse(b.start));
+			if (value === 'start-desc') sorted.sort((a, b) => Date.parse(b.start) - Date.parse(a.start));
+
+			renderTrips(sorted);
+		}
+
+		async function loadTrips() {
+			try {
+				const response = await fetch('/api/trips');
+				allTrips = await response.json();
+				renderTrips(allTrips);
+			} catch (err) {
+				document.getElementById('sites').innerHTML = '<p>Error loading trips.</p>';
+			}
+		}
 
 		function bookTrip(tripId) {
 			const token = localStorage.getItem('travlr-token');
@@ -123,6 +140,8 @@
 					alert('Something went wrong. Please try again.');
 				});
 		}
+
+		document.addEventListener('DOMContentLoaded', loadTrips);
 	</script>
 </body>
 
