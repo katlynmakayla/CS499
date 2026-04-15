@@ -21,12 +21,14 @@ let apiRouter = require("./app_api/routes/index");
 let loginRouter = require('./app_server/routes/login');
 let recommendationsRouter = require('./app_server/routes/recommendations');
 let profileRouter = require('./app_server/routes/profile');
+let registerRouter = require('./app_server/routes/register');
 
 let handlebars = require("hbs");
 
 // wire in our authentication model
 let passport = require("passport");
 const { receiveMessageOnPort } = require("node:worker_threads");
+const { register } = require("node:module");
 require("./app_api/config/passport");
 
 
@@ -70,6 +72,7 @@ app.use("/news", newsRouter);
 app.use("/api", apiRouter);
 app.use('/recommendations', recommendationsRouter);
 app.use('/profile', profileRouter);
+app.use('/register', registerRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -13,7 +13,7 @@
 
                             <div class="form-group">
                                 <label for="email">Email Address</label>
-                                <input type="email" id="email" name="email" class="form-control" 
+                                <input type="email" id="email" name="email" class="form-control"
                                     placeholder="Enter email address" required>
                             </div>
 
@@ -26,6 +26,13 @@
                             <button type="submit" class="btn btn-primary">
                                 Sign In!
                             </button>
+
+                            <div class="text-center mt-3">
+                                <p>
+                                    Don't have an account?
+                                    <a href="/register">Register here</a>
+                                </p>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -57,11 +64,17 @@
 
                 const userRole = (data.user.role || "").toLowerCase();
                 if (userRole === 'admin') {
-                    window.location.href = 'http://localhost:4200/list-trips';
+                    window.location.href = 'http://localhost:4200/login';
                 } else {
                     window.location.href = '/';
                 }
             } else {
+                // If the error message indicates user not found, redirect to register page
+                const message = (data.message || '').toLowerCase();
+                if (message.includes('user not found') || message.includes('email not found')) {
+                    window.location.href = '/register';
+                    return;
+                }
                 // Display error just like the Angular app
                 errorMsg.innerText = data.message || 'All fields are required, please try again.';
                 errorAlert.style.display = 'block';
