@@ -106,7 +106,7 @@
                                             <a href="/api/trips/${trip.code}">
                                                 <img src="/images/${trip.image}" alt="${trip.name}" width="220" style="display: block;">
                                             </a>
-                                            <button onclick="bookTrip('${trip._id}', '${new Date(trip.start).toISOString().split('T')[0]}')">Book Trip</button>
+                                            <button style="width: 220px; margin-top: 6px;" onclick="bookTrip('${trip._id}', '${new Date(trip.start).toISOString().split('T')[0]}')">Book Trip</button>
                                         </div>
                                     </td>
                                     <td style="vertical-align: top;">
