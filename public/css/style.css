@@ -542,3 +542,19 @@ hr {
 #connect a.googleplus:hover {
 	background-position: 0 -197px;
 }
+.form-group {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin-bottom: 12px;
+}
+
+.form-group label {
+	width: 220px;   /* controls alignment */
+	font-weight: bold;
+}
+
+.form-group select {
+	flex: 1;
+	max-width: 250px;
+}
