@@ -54,37 +54,46 @@
 
 		function renderTrips(trips) {
 			const list = document.getElementById('sites');
+			const token = localStorage.getItem('travlr-token');
+			const isLoggedIn = !!token;
+
 			list.innerHTML = trips.map(trip => `
 				<li style="padding-bottom: 12px; margin-bottom: 12px;">
 					<table style="border-collapse: collapse;">
 						<tr>
 							<td style="vertical-align: top; padding-right: 20px; width: 220px;">
-                                        <div style="width: 220px;">
-                                            <a href="/api/trips/${trip.code}">
-                                                <img src="/images/${trip.image}" alt="${trip.name}" width="220" style="display: block;">
-                                            </a>
-                                            <button onclick="bookTrip('${trip._id}', '${new Date(trip.start).toISOString().split('T')[0]}')">Book Trip</button>
-                                        </div>
-                                    </td>
+								<div style="width: 220px;">
+									<a href="/api/trips/${trip.code}">
+										<img src="/images/${trip.image}" alt="${trip.name}" width="220" style="display: block;">
+									</a>
+									<!-- Only show book button if user is logged in -->
+									${isLoggedIn ? `
+										<button onclick="bookTrip('${trip._id}')">
+											Book Trip
+										</button>
+									` : ``}
+
+								</div>
+							</td>
 							<td style="vertical-align: top;">
 								<h2 style="margin: 0 0 8px 0;"><a href="/travel">${trip.name}</a></h2>
 								<p>${trip.description}</p>
 								<table>
-									<tr><td><strong>Resort</strong></td>    <td>${trip.resort}</td></tr>
+									<tr><td><strong>Resort</strong></td><td>${trip.resort}</td></tr>
 									<tr><td><strong>Start Date</strong></td><td>${formatDate(trip.start)}</td></tr>
-									<tr><td><strong>Length</strong></td>    <td>${trip.lengthInDays} days</td></tr>
-									<tr><td><strong>Price</strong></td>     <td>$${trip.price} per person</td></tr>
-									<tr><td><strong>Climate</strong></td>   <td>${trip.tags?.climate ?? ''}</td></tr>
-									<tr><td><strong>Activity</strong></td>  <td>${trip.tags?.activityType ?? ''}</td></tr>
-									<tr><td><strong>Budget</strong></td>    <td>${trip.tags?.budgetRange ?? ''}</td></tr>
-									<tr><td><strong>Duration</strong></td>  <td>${trip.tags?.tripDuration ?? ''}</td></tr>
+									<tr><td><strong>Length</strong></td><td>${trip.lengthInDays} days</td></tr>
+									<tr><td><strong>Price</strong></td><td>$${trip.price} per person</td></tr>
+									<tr><td><strong>Climate</strong></td><td>${trip.tags?.climate ?? ''}</td></tr>
+									<tr><td><strong>Activity</strong></td><td>${trip.tags?.activityType ?? ''}</td></tr>
+									<tr><td><strong>Budget</strong></td><td>${trip.tags?.budgetRange ?? ''}</td></tr>
+									<tr><td><strong>Duration</strong></td><td>${trip.tags?.tripDuration ?? ''}</td></tr>
 								</table>
 							</td>
 						</tr>
 					</table>
 				</li>
 			`).join('');
-		}
+				}
 
 		function sortTrips() {
 			const value = document.getElementById('sort-select').value;
