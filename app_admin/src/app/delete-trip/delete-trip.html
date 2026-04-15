@@ -1,53 +1,119 @@
-<div class="delete-trip-container">
-  <h2>Delete Trip</h2>
-  <p *ngIf="message">{{ message }}</p>
+<div class="col-md-6">
+  <h2 class="text-center">Delete Trip</h2>
 
-  <!-- Show the form once deleteForm is initialized -->
-  <form [formGroup]="deleteForm" (ngSubmit)="onSubmit()" *ngIf="deleteForm">
-    <table>
-      <tr>
-        <td><label for="code">Code:</label></td>
-        <td><input id="code" formControlName="code" /></td>
-      </tr>
-      <tr>
-        <td><label for="name">Name:</label></td>
-        <td><input id="name" formControlName="name" /></td>
-      </tr>
-      <tr>
-        <td><label for="lengthInDays">Length:</label></td>
-        <td><input id="lengthInDays" formControlName="lengthInDays" /></td>
-      </tr>
-      <tr>
-        <td><label for="start">Start:</label></td>
-        <td><input id="start" formControlName="start" /></td>
-      </tr>
-      <tr>
-        <td><label for="resort">Resort:</label></td>
-        <td><input id="resort" formControlName="resort" /></td>
-      </tr>
-      <tr>
-        <td><label for="price">Price Per Person:</label></td>
-        <td><input id="price" formControlName="price" /></td>
-      </tr>
-      <tr>
-        <td><label for="image">Image URL:</label></td>
-        <td><input id="image" formControlName="image" /></td>
-      </tr>
-      <tr>
-        <td><label for="description">Description:</label></td>
-        <td><textarea id="description" formControlName="description"></textarea></td>
-      </tr>
-    </table>
+  <p *ngIf="message" class="text-center text-danger">
+    {{ message }}
+  </p>
 
-    <div style="margin-top: 12px;">
-      <button type="submit">Delete Trip</button>
-      <button type="button" (click)="backToListing()">Cancel</button>
+  <form *ngIf="deleteForm" [formGroup]="deleteForm" (ngSubmit)="onSubmit()">
+
+    <!-- TRIP CODE -->
+    <div class="form-group row mb-2 align-items-center g-0">
+      <label for="code" class="col-sm-3 col-form-label pe-1 mb-0">Code:</label>
+      <div class="col-sm-9 ps-1">
+        <input id="code" type="text" formControlName="code" class="form-control" readonly>
+      </div>
     </div>
+
+    <!-- NAME -->
+    <div class="form-group row mb-2 align-items-center g-0">
+      <label for="name" class="col-sm-3 col-form-label pe-1 mb-0">Name:</label>
+      <div class="col-sm-9 ps-1">
+        <input id="name" type="text" formControlName="name" class="form-control" readonly>
+      </div>
+    </div>
+
+    <!-- LENGTH -->
+    <div class="form-group row mb-2 align-items-center g-0">
+      <label for="lengthInDays" class="col-sm-3 col-form-label pe-1 mb-0">Length (days):</label>
+      <div class="col-sm-9 ps-1">
+        <input id="lengthInDays" type="number" formControlName="lengthInDays" class="form-control" readonly>
+      </div>
+    </div>
+
+    <!-- START -->
+    <div class="form-group row mb-2 align-items-center g-0">
+      <label for="start" class="col-sm-3 col-form-label pe-1 mb-0">Start:</label>
+      <div class="col-sm-9 ps-1">
+        <input id="start" type="date" formControlName="start" class="form-control" readonly>
+      </div>
+    </div>
+
+    <!-- RESORT -->
+    <div class="form-group row mb-2 align-items-center g-0">
+      <label for="resort" class="col-sm-3 col-form-label pe-1 mb-0">Resort:</label>
+      <div class="col-sm-9 ps-1">
+        <input id="resort" type="text" formControlName="resort" class="form-control" readonly>
+      </div>
+    </div>
+
+    <!-- PRICE -->
+    <div class="form-group row mb-2 align-items-center g-0">
+      <label for="price" class="col-sm-3 col-form-label pe-1 mb-0">Price Per Person:</label>
+      <div class="col-sm-9 ps-1">
+        <input id="price" type="number" formControlName="price" class="form-control" readonly>
+      </div>
+    </div>
+
+    <!-- IMAGE -->
+    <div class="form-group row mb-2 align-items-center g-0">
+      <label for="image" class="col-sm-3 col-form-label pe-1 mb-0">Image:</label>
+      <div class="col-sm-9 ps-1">
+        <input id="image" type="text" formControlName="image" class="form-control" readonly>
+      </div>
+    </div>
+
+    <!-- DESCRIPTION -->
+    <div class="form-group row mb-2 align-items-start g-0">
+      <label for="description" class="col-sm-3 col-form-label pe-1 mb-0">Description:</label>
+      <div class="col-sm-9 ps-1">
+        <textarea id="description" formControlName="description" rows="4" class="form-control" readonly></textarea>
+      </div>
+    </div>
+
+    <!-- TAGS -->
+    <div formGroupName="tags">
+
+      <!-- CLIMATE -->
+      <div class="form-group row mb-2 align-items-center g-0">
+        <label for="climate" class="col-sm-3 col-form-label pe-1 mb-0">Climate:</label>
+        <div class="col-sm-9 ps-1">
+          <input id="climate" type="text" formControlName="climate" class="form-control" readonly>
+        </div>
+      </div>
+
+      <!-- ACTIVITY -->
+      <div class="form-group row mb-2 align-items-center g-0">
+        <label for="activityType" class="col-sm-3 col-form-label pe-1 mb-0">Activity Type:</label>
+        <div class="col-sm-9 ps-1">
+          <input id="activityType" type="text" formControlName="activityType" class="form-control" readonly>
+        </div>
+      </div>
+
+      <!-- BUDGET -->
+      <div class="form-group row mb-2 align-items-center g-0">
+        <label for="budgetRange" class="col-sm-3 col-form-label pe-1 mb-0">Budget Range:</label>
+        <div class="col-sm-9 ps-1">
+          <input id="budgetRange" type="text" formControlName="budgetRange" class="form-control" readonly>
+        </div>
+      </div>
+
+      <!-- DURATION -->
+      <div class="form-group row mb-2 align-items-center g-0">
+        <label for="tripDuration" class="col-sm-3 col-form-label pe-1 mb-0">Trip Duration:</label>
+        <div class="col-sm-9 ps-1">
+          <input id="tripDuration" type="text" formControlName="tripDuration" class="form-control" readonly>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- BUTTONS -->
+    <div class="text-center mt-3">
+      <button type="submit" class="btn btn-danger me-2">Delete Trip</button>
+      <button type="button" class="btn btn-secondary" (click)="backToListing()">Cancel</button>
+    </div>
+
   </form>
 
-  <!-- Message after deletion or if trip not found -->
-  <div *ngIf="!trip && message">
-    <p>{{ message }}</p>
-    <button (click)="backToListing()">Back to Trip Listing</button>
-  </div>
 </div>

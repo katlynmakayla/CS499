@@ -1,130 +1,177 @@
-<div class="col-md-4">
+<div class="col-md-6">
     <h2 class="text-center">Edit Trip</h2>
+
     <form *ngIf="editForm" [formGroup]="editForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-            <label for="code">Code:</label>
-            <input id="code" type="text" formControlName="code" placeholder="Code" class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f['code'].errors }">
-            <div *ngIf="submitted && f['code'].errors">
-                <div *ngIf="f['code'].errors['required']">Trip Code is required</div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="name">Name:</label>
-            <input id="name" type="text" formControlName="name" placeholder="Name" class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f['name'].errors }">
-            <div *ngIf="submitted && f['name'].errors">
-                <div *ngIf="f['name'].errors['required']">Name is required</div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="lengthInDays">Length (days):</label>
-            <input id="lengthInDays" type="number" formControlName="lengthInDays"
-                placeholder="Length of trip (number of days)" class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f['lengthInDays'].errors }">
-            <div *ngIf="submitted && f['lengthInDays'].errors">
-                <div *ngIf="f['lengthInDays'].errors['required']">Length is required</div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="start">Start:</label>
-            <input id="start" type="date" formControlName="start" placeholder="Start" class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f['start'].errors }">
-            <div *ngIf="submitted && f['start'].errors">
-                <div *ngIf="f['start'].errors['required']">Date is required</div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="resort">Resort:</label>
-            <input id="resort" type="text" formControlName="resort" placeholder="Resort" class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f['resort'].errors }">
-            <div *ngIf="submitted && f['resort'].errors">
-                <div *ngIf="f['resort'].errors['required']">Resort is required</div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="price">Price Per Person:</label>
-            <input id="price" type="number" formControlName="price" placeholder="Price Per Person (number)"
-                class="form-control" [ngClass]="{ 'is-invalid': submitted && f['price'].errors }">
-            <div *ngIf="submitted && f['price'].errors">
-                <div *ngIf="f['price'].errors['required']">Price Per Person is required</div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="image">Image Name:</label>
-            <input id="image" type="text" formControlName="image" placeholder="Image" class="form-control"
-                [ngClass]="{ 'is-invalid': submitted && f['image'].errors }">
-            <div *ngIf="submitted && f['image'].errors">
-                <div *ngIf="f['image'].errors['required']">Image Name is required</div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="description">Description:</label>
-            <input id="description" type="text" formControlName="description" placeholder="Description"
-                class="form-control" [ngClass]="{ 'is-invalid': submitted && f['description'].errors }">
-            <div *ngIf="submitted && f['description'].errors">
-                <div *ngIf="f['description'].errors['required']">Description is required</div>
+        <!-- CODE -->
+        <div class="form-group row mb-2 align-items-center g-0">
+            <label for="code" class="col-sm-3 col-form-label pe-1 mb-0">Code:</label>
+            <div class="col-sm-9 ps-1">
+                <input id="code" type="text" formControlName="code" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f['code'].errors }" />
+                <div *ngIf="submitted && f['code'].errors" class="text-danger small">
+                    Trip Code is required
+                </div>
             </div>
         </div>
 
-        <!-- Tags -->
+        <!-- NAME -->
+        <div class="form-group row mb-2 align-items-center g-0">
+            <label for="name" class="col-sm-3 col-form-label pe-1 mb-0">Name:</label>
+            <div class="col-sm-9 ps-1">
+                <input id="name" type="text" formControlName="name" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f['name'].errors }" />
+                <div *ngIf="submitted && f['name'].errors" class="text-danger small">Name is required</div>
+            </div>
+        </div>
+
+        <!-- LENGTH -->
+        <div class="form-group row mb-2 align-items-center g-0">
+            <label for="lengthInDays" class="col-sm-3 col-form-label pe-1 mb-0">Length (days):</label>
+            <div class="col-sm-9 ps-1">
+                <input id="lengthInDays" type="number" formControlName="lengthInDays" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f['lengthInDays'].errors }" />
+                <div *ngIf="submitted && f['lengthInDays'].errors" class="text-danger small">
+                    Length is required
+                </div>
+            </div>
+        </div>
+
+        <!-- START -->
+        <div class="form-group row mb-2 align-items-center g-0">
+            <label for="start" class="col-sm-3 col-form-label pe-1 mb-0">Start:</label>
+            <div class="col-sm-9 ps-1">
+                <input id="start" type="date" formControlName="start" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f['start'].errors }" />
+                <div *ngIf="submitted && f['start'].errors" class="text-danger small">Date is required</div>
+            </div>
+        </div>
+
+        <!-- RESORT -->
+        <div class="form-group row mb-2 align-items-center g-0">
+            <label for="resort" class="col-sm-3 col-form-label pe-1 mb-0">Resort:</label>
+            <div class="col-sm-9 ps-1">
+                <input id="resort" type="text" formControlName="resort" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f['resort'].errors }" />
+                <div *ngIf="submitted && f['resort'].errors" class="text-danger small">
+                    Resort is required
+                </div>
+            </div>
+        </div>
+
+        <!-- PRICE -->
+        <div class="form-group row mb-2 align-items-center g-0">
+            <label for="price" class="col-sm-3 col-form-label pe-1 mb-0">Price Per Person:</label>
+            <div class="col-sm-9 ps-1">
+                <input id="price" type="number" formControlName="price" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f['price'].errors }" />
+                <div *ngIf="submitted && f['price'].errors" class="text-danger small">
+                    Price is required
+                </div>
+            </div>
+        </div>
+
+        <!-- IMAGE -->
+        <div class="form-group row mb-2 align-items-center g-0">
+            <label for="image" class="col-sm-3 col-form-label pe-1 mb-0">Image Name:</label>
+            <div class="col-sm-9 ps-1">
+                <input id="image" type="text" formControlName="image" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f['image'].errors }" />
+                <div *ngIf="submitted && f['image'].errors" class="text-danger small">
+                    Image Name is required
+                </div>
+            </div>
+        </div>
+
+        <!-- DESCRIPTION -->
+        <div class="form-group row mb-2 align-items-center g-0">
+            <label for="description" class="col-sm-3 col-form-label pe-1 mb-0">Description:</label>
+            <div class="col-sm-9 ps-1">
+                <textarea id="description" formControlName="description" class="form-control" rows="4"
+                    [ngClass]="{ 'is-invalid': submitted && f['description'].errors }">
+        </textarea>
+
+                <div *ngIf="submitted && f['description'].errors" class="text-danger small">
+                    Description is required
+                </div>
+            </div>
+        </div>
+
+        <!-- TAGS -->
         <div formGroupName="tags">
-            <div class="form-group">
-                <label for="climate">Climate:</label>
-                <select id="climate" formControlName="climate" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f['tags'].get('climate')?.errors }">
-                    <option value="">Select Climate</option>
-                    <option value="tropical">Tropical</option>
-                    <option value="temperate">Temperate</option>
-                    <option value="arid">Arid</option>
-                    <option value="cold">Cold</option>
-                </select>
-                <div *ngIf="submitted && f['tags'].get('climate')?.errors">
-                    <div *ngIf="f['tags'].get('climate')?.errors?.['required']">Climate is required</div>
+            <!-- CLIMATE -->
+            <div class="form-group row mb-2 align-items-center g-0">
+                <label for="climate" class="col-sm-3 col-form-label pe-1 mb-0">Climate:</label>
+                <div class="col-sm-9 ps-1">
+                    <select id="climate" formControlName="climate" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f['tags'].get('climate')?.errors }">
+                        <option value="">Select Climate</option>
+                        <option value="tropical">Tropical</option>
+                        <option value="temperate">Temperate</option>
+                        <option value="arid">Arid</option>
+                        <option value="cold">Cold</option>
+                    </select>
+                    <div *ngIf="submitted && f['tags'].get('climate')?.errors" class="text-danger small">
+                        Climate is required
+                    </div>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="activityType">Activity Type:</label>
-                <select id="activityType" formControlName="activityType" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f['tags'].get('activityType')?.errors }">
-                    <option value="">Select Activity</option>
-                    <option value="adventure">Adventure</option>
-                    <option value="relaxation">Relaxation</option>
-                    <option value="cultural">Cultural</option>
-                    <option value="family">Family</option>
-                </select>
-                <div *ngIf="submitted && f['tags'].get('activityType')?.errors">
-                    <div *ngIf="f['tags'].get('activityType')?.errors?.['required']">Activity Type is required</div>
+
+            <!-- ACTIVITY -->
+            <div class="form-group row mb-2 align-items-center g-0">
+                <label for="activityType" class="col-sm-3 col-form-label pe-1 mb-0">Activity Type:</label>
+                <div class="col-sm-9 ps-1">
+                    <select id="activityType" formControlName="activityType" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f['tags'].get('activityType')?.errors }">
+                        <option value="">Select Activity</option>
+                        <option value="adventure">Adventure</option>
+                        <option value="relaxation">Relaxation</option>
+                        <option value="cultural">Cultural</option>
+                        <option value="family">Family</option>
+                    </select>
+                    <div *ngIf="submitted && f['tags'].get('activityType')?.errors" class="text-danger small">
+                        Activity Type is required
+                    </div>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="budgetRange">Budget Range:</label>
-                <select id="budgetRange" formControlName="budgetRange" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f['tags'].get('budgetRange')?.errors }">
-                    <option value="">Select Budget</option>
-                    <option value="budget">Budget</option>
-                    <option value="midrange">Mid-Range</option>
-                    <option value="luxury">Luxury</option>
-                </select>
-                <div *ngIf="submitted && f['tags'].get('budgetRange')?.errors">
-                    <div *ngIf="f['tags'].get('budgetRange')?.errors?.['required']">Budget Range is required</div>
+
+            <!-- BUDGET -->
+            <div class="form-group row mb-2 align-items-center g-0">
+                <label for="budgetRange" class="col-sm-3 col-form-label pe-1 mb-0">Budget Range:</label>
+                <div class="col-sm-9 ps-1">
+                    <select id="budgetRange" formControlName="budgetRange" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f['tags'].get('budgetRange')?.errors }">
+                        <option value="">Select Budget</option>
+                        <option value="budget">Budget</option>
+                        <option value="midrange">Mid-Range</option>
+                        <option value="luxury">Luxury</option>
+                    </select>
+                    <div *ngIf="submitted && f['tags'].get('budgetRange')?.errors" class="text-danger small">
+                        Budget Range is required
+                    </div>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="tripDuration">Trip Duration:</label>
-                <select id="tripDuration" formControlName="tripDuration" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f['tags'].get('tripDuration')?.errors }">
-                    <option value="">Select Duration</option>
-                    <option value="weekend">Weekend</option>
-                    <option value="week">Week</option>
-                    <option value="extended">Extended</option>
-                </select>
-                <div *ngIf="submitted && f['tags'].get('tripDuration')?.errors">
-                    <div *ngIf="f['tags'].get('tripDuration')?.errors?.['required']">Trip Duration is required</div>
+
+            <!-- DURATION -->
+            <div class="form-group row mb-2 align-items-center g-0">
+                <label for="tripDuration" class="col-sm-3 col-form-label pe-1 mb-0">Trip Duration:</label>
+                <div class="col-sm-9 ps-1">
+                    <select id="tripDuration" formControlName="tripDuration" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f['tags'].get('tripDuration')?.errors }">
+                        <option value="">Select Duration</option>
+                        <option value="weekend">Weekend</option>
+                        <option value="week">Week</option>
+                        <option value="extended">Extended</option>
+                    </select>
+                    <div *ngIf="submitted && f['tags'].get('tripDuration')?.errors" class="text-danger small">
+                        Trip Duration is required
+                    </div>
                 </div>
             </div>
         </div>
 
-        <button type="submit" class="btn btn-info">Save</button>
+        <!-- SUBMIT BUTTON -->
+        <div class="text-center mt-3">
+            <button type="submit" class="btn btn-info">Save</button>
+        </div>
     </form>
 </div>

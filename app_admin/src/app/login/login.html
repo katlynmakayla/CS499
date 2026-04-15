@@ -1,22 +1,43 @@
-<div class="row">
-    <div class="col-12 col-md-8">
-        <h2>Login</h2>
-        <form (ngSubmit)="onLoginSubmit()">
-            <div role="alert" *ngIf="formError" class="alert alert-danger">
-                {{ formError }}
+<div class="col-md-6">
+    <h2 class="text-center">Login</h2>
+
+    <form (ngSubmit)="onLoginSubmit()">
+
+        <!-- ERROR MESSAGE -->
+        <div role="alert" *ngIf="formError" class="alert alert-danger text-center">
+            {{ formError }}
+        </div>
+
+        <!-- EMAIL -->
+        <div class="form-group row mb-2 align-items-center g-0">
+            <label for="email" class="col-sm-3 col-form-label pe-1 mb-0">
+                Email:
+            </label>
+
+            <div class="col-sm-9 ps-1">
+                <input type="email" id="email" name="email" class="form-control" placeholder="Enter email address"
+                    [(ngModel)]="credentials.email" required />
             </div>
-            <div class="form-group">
-                <label for="email">Email Address</label>
-                <input type="email" name="email" placeholder="Enter email address" [(ngModel)]="credentials.email">
+        </div>
+
+        <!-- PASSWORD -->
+        <div class="form-group row mb-2 align-items-center g-0">
+            <label for="password" class="col-sm-3 col-form-label pe-1 mb-0">
+                Password:
+            </label>
+
+            <div class="col-sm-9 ps-1">
+                <input type="password" id="password" name="password" class="form-control" placeholder="Enter password"
+                    [(ngModel)]="credentials.password" required />
             </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" name="password"
-                    placeholder="Enter Password" [(ngModel)]="credentials.password">
-            </div>
+        </div>
+
+        <!-- SUBMIT BUTTON (SIGN IN) -->
+        <div class="text-center mt-3">
             <button type="submit" class="btn btn-primary" (keydown.enter)="onLoginSubmit()">
-                Sign In!
+                Sign In
             </button>
-        </form>
-    </div>
+        </div>
+
+    </form>
 </div>
