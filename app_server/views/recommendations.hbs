@@ -106,7 +106,7 @@
                                             <a href="/api/trips/${trip.code}">
                                                 <img src="/images/${trip.image}" alt="${trip.name}" width="220" style="display: block;">
                                             </a>
-                                            <button style="display: block; width: 220px;" onclick="bookTrip('${trip._id}')">Book Trip</button>
+                                            <button onclick="bookTrip('${trip._id}', '${new Date(trip.start).toISOString().split('T')[0]}')">Book Trip</button>
                                         </div>
                                     </td>
                                     <td style="vertical-align: top;">
@@ -134,15 +134,13 @@
             }
         }
 
-        function bookTrip(tripId) {
+        function bookTrip(tripId, travelDate) {
             const token = localStorage.getItem('travlr-token');
+
             if (!token) {
                 alert('You must be logged in to book a trip.');
                 return;
             }
-
-            const travelDate = prompt('Enter your travel date (YYYY-MM-DD):');
-            if (!travelDate) return;
 
             fetch('/api/bookings', {
                 method: 'POST',

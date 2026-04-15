@@ -59,15 +59,15 @@
 					<table style="border-collapse: collapse;">
 						<tr>
 							<td style="vertical-align: top; padding-right: 20px; width: 220px;">
-								<div style="width: 220px;">
-									<a href="/api/trips/${trip.code}">
-										<img src="/images/${trip.image}" alt="${trip.name}" width="220" style="display: block;">
-									</a>
-								</div>
-							</td>
+                                        <div style="width: 220px;">
+                                            <a href="/api/trips/${trip.code}">
+                                                <img src="/images/${trip.image}" alt="${trip.name}" width="220" style="display: block;">
+                                            </a>
+                                            <button onclick="bookTrip('${trip._id}', '${new Date(trip.start).toISOString().split('T')[0]}')">Book Trip</button>
+                                        </div>
+                                    </td>
 							<td style="vertical-align: top;">
 								<h2 style="margin: 0 0 8px 0;"><a href="/travel">${trip.name}</a></h2>
-								<button style="display: block; width: 100px;" onclick="bookTrip('${trip._id}')">Book Trip</button>
 								<p>${trip.description}</p>
 								<table>
 									<tr><td><strong>Resort</strong></td>    <td>${trip.resort}</td></tr>
@@ -116,8 +116,22 @@
 				return;
 			}
 
-			const travelDate = prompt('Enter your travel date (YYYY-MM-DD):');
-			if (!travelDate) return;
+			// find the trip object from loaded data
+			const trip = allTrips.find(t => t._id === tripId);
+
+			if (!trip) {
+				alert('Trip not found.');
+				return;
+			}
+
+			// use start date if available
+			let travelDate = trip.start;
+
+			// fallback only if missing
+			if (!travelDate) {
+				travelDate = prompt('Enter your travel date (YYYY-MM-DD):');
+				if (!travelDate) return;
+			}
 
 			fetch('/api/bookings', {
 				method: 'POST',

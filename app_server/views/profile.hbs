@@ -19,7 +19,8 @@
                             <div class="row">
                                 <div class="col-12 col-md-8">
                                     <h1>My Travel Profile</h1>
-                                    <p class="mb-4">Customize your preferences to get better vacation recommendations.</p>
+                                    <p class="mb-4">Customize your preferences to get better vacation recommendations.
+                                    </p>
 
                                     <div id="status-alert" role="alert" class="alert" style="display: none;">
                                         <span id="status-message"></span>
@@ -66,6 +67,13 @@
 
                                         <button type="submit" class="btn btn-primary">Save Preferences</button>
                                     </form>
+                                    <hr style="margin: 30px 0;">
+
+                                    <h2>My Bookings</h2>
+
+                                    <div id="bookings-list">
+                                        <p>Loading your bookings...</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -94,8 +102,8 @@
                 const user = await response.json();
 
                 if (user.profile) {
-                    if (user.profile.budgetRange)  document.getElementById('budgetRange').value  = user.profile.budgetRange;
-                    if (user.profile.climate)      document.getElementById('climate').value      = user.profile.climate;
+                    if (user.profile.budgetRange) document.getElementById('budgetRange').value = user.profile.budgetRange;
+                    if (user.profile.climate) document.getElementById('climate').value = user.profile.climate;
                     if (user.profile.activityType) document.getElementById('activityType').value = user.profile.activityType;
                     if (user.profile.tripDuration) document.getElementById('tripDuration').value = user.profile.tripDuration;
                 }
@@ -108,8 +116,8 @@
             e.preventDefault();
 
             const profileData = {
-                budgetRange:  document.getElementById('budgetRange').value,
-                climate:      document.getElementById('climate').value,
+                budgetRange: document.getElementById('budgetRange').value,
+                climate: document.getElementById('climate').value,
                 activityType: document.getElementById('activityType').value,
                 tripDuration: document.getElementById('tripDuration').value
             };
@@ -141,7 +149,112 @@
             setTimeout(() => { statusAlert.style.display = 'none'; }, 3000);
         }
 
+
+        // get bookings
+        async function loadBookings() {
+            const list = document.getElementById('bookings-list');
+            list.innerHTML = '<p>Loading your bookings...</p>';
+            try {
+                const response = await fetch('/api/bookings/mine', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (response.status === 401) {
+                    list.innerHTML = '<p>Session expired. Please log in again.</p>';
+                    return;
+                }
+
+                const data = await response.json();
+
+                // If no bookings or API returns message
+                if (!Array.isArray(data) || data.length === 0) {
+                    list.innerHTML = '<p>You don’t have any bookings yet.</p>';
+                    return;
+                }
+
+                list.innerHTML = '';
+
+                data.forEach(booking => {
+                    const trip = booking.tripId || {};
+
+                    const startDate = booking.travelDate
+                        ? new Date(booking.travelDate).toLocaleDateString()
+                        : 'N/A';
+
+                    const item = `
+                        <div style="border: 1px solid #ccc; padding: 12px; margin-bottom: 12px;">
+                            <div style="display: flex; gap: 16px;">
+                                
+                                <div style="width:150px;">
+                                    <img 
+                                        src="/images/${trip.image}" 
+                                        alt="${trip.name}" 
+                                        width="150"
+                                        style="display:block;"
+                                        onerror="this.style.display='none'"
+                                    >
+
+                                    <button 
+                                        style="display:block; width:150px; margin-top:6px;"
+                                        onclick="cancelBooking('${booking._id}')">
+                                        Cancel Booking
+                                    </button>
+                                </div>
+
+                                <div>
+                                    <h3>${trip.name}</h3>
+                                    <p>${trip.description}</p>
+
+                                    <p><strong>Travel Date:</strong> ${startDate}</p>
+                                    <p><strong>Status:</strong> ${booking.status}</p>
+                                </div>
+
+                            </div>
+                        </div>
+                        `;
+
+                    list.innerHTML += item;
+                });
+
+            } catch (err) {
+                console.error(err);
+                list.innerHTML = '<p>Error loading bookings.</p>';
+            }
+        }
+
+        // cancel booking
+        async function cancelBooking(bookingId) {
+            const confirmCancel = confirm('Are you sure you want to cancel this booking?');
+            if (!confirmCancel) return;
+
+            try {
+                const response = await fetch(`/api/bookings/${bookingId}/cancel`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert('Booking cancelled.');
+                    loadBookings();
+                } else {
+                    alert(data.message || 'Failed to cancel booking.');
+                }
+
+            } catch (err) {
+                console.error(err);
+                alert('Error cancelling booking.');
+            }
+        }
+
+
         loadProfile();
+        loadBookings();
     </script>
 </body>
 
