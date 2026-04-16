@@ -115,7 +115,7 @@ export class Authentication {
     return this.tripDataService.login(user, passwd).pipe(
       tap((value: any) => {
         if (value) {
-          console.log(value);
+          //console.log(value);
           this.authResponse = value;
           // save the token and user information to storage
           this.saveToken(value.token);
